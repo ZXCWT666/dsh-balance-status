@@ -30,7 +30,7 @@ DeepSeek 账户余额    ¥17.83      ████████░░  余额剩�
 ## 安装与验证
 
 ```powershell
-dsh plugin --profile web add <本仓库路径>     # 重启 Harness 应用后生效
+dsh plugin --profile web add C:\Users\USER\source\repos\dsh-balance-status     # 重启 Harness 应用后生效
 
 (Invoke-WebRequest "http://127.0.0.1:3080/balance-status/status?force=1").Content   # 手动刷新一次
 ```
