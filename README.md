@@ -5,6 +5,13 @@ DeepSeek 账户余额状态组件 — a native profile plugin for
 status widget that looks and behaves like a built-in feature: no card
 background, no border, no shadow, no new visual layer.
 
+
+## 界面预览
+
+| 侧边栏组件 | 详情弹窗（深色玻璃） | 悬停提示 |
+| --- | --- | --- |
+| ![侧边栏组件](docs/screenshot-sidebar.png) | ![详情弹窗](docs/screenshot-modal.png) | ![悬停提示](docs/screenshot-tooltip.png) |
+
 ## Features
 
 ```

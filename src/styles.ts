@@ -108,7 +108,7 @@ export const cssText = `
 .dbs-modal{width:480px;max-width:calc(100vw - 48px)}
 .dbs-modalBody{display:flex;flex-direction:column;gap:18px;padding-bottom:4px}
 .dbs-block{display:flex;flex-direction:column;gap:6px}
-.dbs-caption{color:var(--dsw-alias-label-caption);text-transform:uppercase;letter-spacing:.04em;font-size:12px;line-height:18px}
+.dbs-caption{color:var(--dsw-alias-label-caption);letter-spacing:.04em;font-size:12px;line-height:18px}
 .dbs-balanceMain{color:var(--dsw-alias-label-primary);font-size:24px;line-height:32px;font-weight:600}
 .dbs-callMain{color:var(--dsw-alias-label-primary);font-size:16px;line-height:22px;font-weight:500}
 .dbs-balanceSub{color:var(--dsw-alias-label-tertiary);font-size:12px;line-height:18px}

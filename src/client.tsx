@@ -27,8 +27,8 @@ const zh = {
 	"unconfigured": "未配置密钥",
 	"tooltip.balance": "账户余额",
 	"tooltip.today": "今日消耗",
-	"tooltip.input": "输入 Token",
-	"tooltip.output": "输出 Token",
+	"tooltip.input": "输入 tok",
+	"tooltip.output": "输出 tok",
 	"tooltip.synced": "最后同步",
 	"tooltip.balanceRemain": "余额剩余",
 	"tooltip.todayQuota": "今日配额",
@@ -59,8 +59,8 @@ const en = {
 	"unconfigured": "No API key",
 	"tooltip.balance": "Balance",
 	"tooltip.today": "Today",
-	"tooltip.input": "Input tokens",
-	"tooltip.output": "Output tokens",
+	"tooltip.input": "Input tok",
+	"tooltip.output": "Output tok",
 	"tooltip.synced": "Last sync",
 	"tooltip.balanceRemain": "Balance left",
 	"tooltip.todayQuota": "Today's quota",
@@ -261,13 +261,13 @@ function BalanceStatus({ wide, t }: BalanceStatusProps) {
 	const balanceText = balance !== null
 		? formatMoney(balance.currency, balance.total)
 		: loading ? "—" : data?.balanceError?.code === "MISSING_CREDENTIAL" ? t("unconfigured") : t("failed");
-	const todayTokens = today !== null ? `${formatCompact(todayTotal)} Tokens` : loading ? "—" : t("failed");
+	const todayTokens = today !== null ? `${formatCompact(todayTotal)} tok` : loading ? "—" : t("failed");
 
 	const tooltipLabel = () => {
 		const lines = [];
 		lines.push(`${t("tooltip.balance")}：${balance !== null ? formatMoney(balance.currency, balance.total) : data?.balanceError?.code === "MISSING_CREDENTIAL" ? t("unconfigured") : t("failed")}`);
 		if (today !== null) {
-			lines.push(`${t("tooltip.today")}：${formatFull(todayTotal)} Tokens`);
+			lines.push(`${t("tooltip.today")}：${formatFull(todayTotal)} tok`);
 			lines.push(`${t("tooltip.input")}：${formatFull(today.input)}`);
 			lines.push(`${t("tooltip.output")}：${formatFull(today.output)}`);
 		} else if (loading) {
@@ -277,7 +277,7 @@ function BalanceStatus({ wide, t }: BalanceStatusProps) {
 			lines.push(`${t("tooltip.balanceRemain")}：${formatMoney(balance.currency, balance.total)} / ${formatMoney(balance.currency, targets.balance)}（${Math.round(balancePct * 100)}%）`);
 		}
 		if (today !== null && targets !== null) {
-			lines.push(`${t("tooltip.todayQuota")}：${formatCompact(todayTotal)} / ${formatCompact(targets.dailyTokens)} Tokens（${Math.round(tokenPct * 100)}%）`);
+			lines.push(`${t("tooltip.todayQuota")}：${formatCompact(todayTotal)} / ${formatCompact(targets.dailyTokens)} tok（${Math.round(tokenPct * 100)}%）`);
 		}
 		lines.push(`${t("tooltip.synced")}：${data !== null ? formatRelativeLabel(Date.now(), data.syncedAt) : "—"}`);
 		return lines.join("\n");
@@ -341,9 +341,9 @@ function BalanceStatus({ wide, t }: BalanceStatusProps) {
 					<section className={styles.block}>
 						<span className={styles.caption}>{t("modal.usage")}</span>
 						<div className={styles.rows}>
-							<DetailRow label={t("modal.today")} value={usage !== null ? `${formatFull(usage.today.input + usage.today.output)} Tokens · ${formatFull(usage.today.calls)} ${t("modal.callsUnit")}` : "—"} />
-							<DetailRow label={t("modal.week")} value={usage !== null ? `${formatFull(usage.week.input + usage.week.output)} Tokens · ${formatFull(usage.week.calls)} ${t("modal.callsUnit")}` : "—"} />
-							<DetailRow label={t("modal.month")} value={usage !== null ? `${formatFull(usage.month.input + usage.month.output)} Tokens · ${formatFull(usage.month.calls)} ${t("modal.callsUnit")}` : "—"} />
+							<DetailRow label={t("modal.today")} value={usage !== null ? `${formatFull(usage.today.input + usage.today.output)} tok · ${formatFull(usage.today.calls)} ${t("modal.callsUnit")}` : "—"} />
+							<DetailRow label={t("modal.week")} value={usage !== null ? `${formatFull(usage.week.input + usage.week.output)} tok · ${formatFull(usage.week.calls)} ${t("modal.callsUnit")}` : "—"} />
+							<DetailRow label={t("modal.month")} value={usage !== null ? `${formatFull(usage.month.input + usage.month.output)} tok · ${formatFull(usage.month.calls)} ${t("modal.callsUnit")}` : "—"} />
 						</div>
 					</section>
 					<section className={styles.block}>
@@ -353,7 +353,7 @@ function BalanceStatus({ wide, t }: BalanceStatusProps) {
 							: modelEntries.map(([model, mb]) => (
 								<div className={styles.modelRow} key={model}>
 									<span className={styles.modelName}>{prettyModel(model)}</span>
-									<span className={styles.modelMeta}>{formatFull(mb.calls)} {t("modal.callsUnit")} · {formatFull(mb.input + mb.output)} Tokens</span>
+									<span className={styles.modelMeta}>{formatFull(mb.calls)} {t("modal.callsUnit")} · {formatFull(mb.input + mb.output)} tok</span>
 								</div>
 							))}
 					</section>
