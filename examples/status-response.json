@@ -1,0 +1,55 @@
+{
+  "ok": true,
+  "syncedAt": 1787668701995,
+  "balance": {
+    "available": true,
+    "currency": "CNY",
+    "total": 46.93,
+    "granted": 0,
+    "toppedUp": 46.93
+  },
+  "balanceError": null,
+  "targets": {
+    "balance": 100,
+    "dailyTokens": 500000
+  },
+  "usage": {
+    "today": {
+      "input": 179159,
+      "output": 95344,
+      "calls": 136,
+      "models": {
+        "deepseek-v4-flash-vision-exp": { "input": 175159, "output": 92344, "calls": 132 },
+        "deepseek-v4-flash": { "input": 4000, "output": 3000, "calls": 4 }
+      }
+    },
+    "week": {
+      "input": 2397449,
+      "output": 920893,
+      "calls": 1139,
+      "models": {
+        "deepseek-v4-flash-vision-exp": { "input": 2231611, "output": 871616, "calls": 1099 },
+        "deepseek-v4-flash": { "input": 165838, "output": 49277, "calls": 40 }
+      }
+    },
+    "month": {
+      "input": 2397449,
+      "output": 920893,
+      "calls": 1139,
+      "models": {
+        "deepseek-v4-flash-vision-exp": { "input": 2231611, "output": 871616, "calls": 1099 },
+        "deepseek-v4-flash": { "input": 165838, "output": 49277, "calls": 40 }
+      }
+    },
+    "all": {
+      "input": 2397449,
+      "output": 920893,
+      "calls": 1139,
+      "models": {
+        "deepseek-v4-flash-vision-exp": { "input": 2231611, "output": 871616, "calls": 1099 },
+        "deepseek-v4-flash": { "input": 165838, "output": 49277, "calls": 40 }
+      }
+    }
+  },
+  "errors": []
+}

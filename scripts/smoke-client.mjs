@@ -5,10 +5,12 @@ import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-// React is resolved from a modules root that ships a matching version — the
-// dev workspace in a checkout, or an explicit override via REACT_MODULES_ROOT.
+// React is resolved from the repository root node_modules first (self-contained
+// clone after `pnpm install`), then an explicit REACT_MODULES_ROOT override.
+const repoRoot = new URL("../", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
 const modulesRoots = [
   process.env.REACT_MODULES_ROOT,
+  repoRoot.replace(/\/$/, "") + "/node_modules",
   "D:/dsh/node_modules",
 ].filter((candidate) => candidate !== undefined);
 const findReact = (spec) => {

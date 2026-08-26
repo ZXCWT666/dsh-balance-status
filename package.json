@@ -1,18 +1,33 @@
 {
   "name": "dsh-balance-status",
-  "description": "DeepSeek account balance + token usage status widget for the web sidebar",
+  "description": "DeepSeek 账户余额状态组件 — 极简型 dsh web 侧边栏插件（余额 + Token 用量）",
   "version": "1.0.1",
   "private": true,
   "type": "module",
   "main": "lib/index.js",
+  "types": "lib/types.d.ts",
   "exports": {
     ".": {
+      "types": "./lib/types.d.ts",
       "default": "./lib/index.js"
     },
     "./client": {
+      "types": "./lib/types.d.ts",
       "default": "./lib/client.js"
     },
     "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build-client.mjs",
+    "smoke": "node scripts/smoke-client.mjs",
+    "validate": "node scripts/validate-host.mjs",
+    "check": "node scripts/build-client.mjs && node scripts/smoke-client.mjs"
   },
   "dsh": {
     "bundle": {
@@ -26,6 +41,16 @@
         "@deepseek-ai/dsh-client-ui-sidebar"
       ]
     }
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "license": "MIT"
 }

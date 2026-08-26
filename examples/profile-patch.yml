@@ -1,0 +1,5 @@
+# 示例：把本插件作为 profile 组合层安装后的补丁行
+# （等价于本仓库 cordis.patch.yml 的内容；仅当你想手写组合时参考。）
+- insert:
+    - id: balance-status
+      name: 'dsh-balance-status'
