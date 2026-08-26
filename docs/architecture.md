@@ -48,6 +48,9 @@
     维护每个模型的 input/output/calls 细分；
   - 窗口回答 = 对分桶做区间求和（today/week/month/all），一次扫描应答，
     窗口滚动无需重读日志。
+- **显示参考值（可配置）**：能量条参考值按 宿主设置段 `balance-status`（settings.yaml
+  用户层）→ 环境变量 `BALANCE_STATUS_BALANCE_TARGET` / `BALANCE_STATUS_DAILY_TOKENS`
+  → 编译默认值（¥100 / 500K）顺序解析；设置段改动后下一个快照即生效，无需重启。
 - **缓存与并发**：快照 60s TTL + 单飞行（single-flight）合并并发请求；
   余额单独 60s TTL，失败时保留上一次成功值并记录 `balanceError`。
   手动刷新 `?force=1` 旁路缓存。

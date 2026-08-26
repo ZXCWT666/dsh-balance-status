@@ -2,6 +2,27 @@
 
 本文件记录 `dsh-balance-status` 的每次版本变更。
 
+## [1.0.2] — 2026-08-26
+
+**功能**
+
+- 能量条参考值改为可配置：宿主设置段 `balance-status`（`settings.yaml`
+  用户层，热生效）→ 环境变量 `BALANCE_STATUS_BALANCE_TARGET` /
+  `BALANCE_STATUS_DAILY_TOKENS` → 编译默认值，按序覆盖；
+- 详情弹窗新增「缓存命中（本月）」与「推理 Token（本月）」两行
+  （`cacheReadTokens` / `reasoningTokens` 已进入聚合与接口字段）；
+- i18n 清零：相对时间（刚刚/X 分钟前/小时前）与冒号分隔符全部走字典，
+  en 字典不再中英混排。
+
+**内部**
+
+- 宿主导出纯函数（`foldUsage` / `aggregateWindows` / `scanZstdFrames` /
+  `resolveTargets` / 时间窗口），新增 `scripts/unit.mjs`（13 例，无网络
+  无凭证，可入 CI）；`pnpm check` = build + smoke + unit；
+- CI 改为 `workflow_dispatch` 手动触发（平台 Runner 激活前避免排队噪音）；
+- `lib/types.d.ts` 与示例响应补充 cacheRead/reasoning 字段；
+- package.json 升至 1.0.2，声明 `@deepseek-ai/schemastery` 运行时依赖。
+
 ## [1.0.1] — 2026-08-26
 
 **功能**

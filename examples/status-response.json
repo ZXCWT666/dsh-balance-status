@@ -17,37 +17,45 @@
     "today": {
       "input": 179159,
       "output": 95344,
+      "cacheRead": 120000,
+      "reasoning": 22000,
       "calls": 136,
       "models": {
-        "deepseek-v4-flash-vision-exp": { "input": 175159, "output": 92344, "calls": 132 },
-        "deepseek-v4-flash": { "input": 4000, "output": 3000, "calls": 4 }
+        "deepseek-v4-flash-vision-exp": { "input": 175159, "output": 92344, "cacheRead": 118000, "reasoning": 21500, "calls": 132 },
+        "deepseek-v4-flash": { "input": 4000, "output": 3000, "cacheRead": 2000, "reasoning": 500, "calls": 4 }
       }
     },
     "week": {
       "input": 2397449,
       "output": 920893,
+      "cacheRead": 1540000,
+      "reasoning": 315000,
       "calls": 1139,
       "models": {
-        "deepseek-v4-flash-vision-exp": { "input": 2231611, "output": 871616, "calls": 1099 },
-        "deepseek-v4-flash": { "input": 165838, "output": 49277, "calls": 40 }
+        "deepseek-v4-flash-vision-exp": { "input": 2231611, "output": 871616, "cacheRead": 1480000, "reasoning": 305000, "calls": 1099 },
+        "deepseek-v4-flash": { "input": 165838, "output": 49277, "cacheRead": 60000, "reasoning": 10000, "calls": 40 }
       }
     },
     "month": {
       "input": 2397449,
       "output": 920893,
+      "cacheRead": 1540000,
+      "reasoning": 315000,
       "calls": 1139,
       "models": {
-        "deepseek-v4-flash-vision-exp": { "input": 2231611, "output": 871616, "calls": 1099 },
-        "deepseek-v4-flash": { "input": 165838, "output": 49277, "calls": 40 }
+        "deepseek-v4-flash-vision-exp": { "input": 2231611, "output": 871616, "cacheRead": 1480000, "reasoning": 305000, "calls": 1099 },
+        "deepseek-v4-flash": { "input": 165838, "output": 49277, "cacheRead": 60000, "reasoning": 10000, "calls": 40 }
       }
     },
     "all": {
       "input": 2397449,
       "output": 920893,
+      "cacheRead": 1540000,
+      "reasoning": 315000,
       "calls": 1139,
       "models": {
-        "deepseek-v4-flash-vision-exp": { "input": 2231611, "output": 871616, "calls": 1099 },
-        "deepseek-v4-flash": { "input": 165838, "output": 49277, "calls": 40 }
+        "deepseek-v4-flash-vision-exp": { "input": 2231611, "output": 871616, "cacheRead": 1480000, "reasoning": 305000, "calls": 1099 },
+        "deepseek-v4-flash": { "input": 165838, "output": 49277, "cacheRead": 60000, "reasoning": 10000, "calls": 40 }
       }
     }
   },

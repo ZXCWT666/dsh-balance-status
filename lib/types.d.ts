@@ -6,8 +6,18 @@
 export interface BalanceUsageWindow {
   input: number;
   output: number;
+  /** Provider-reported cache-read tokens inside the window. */
+  cacheRead: number;
+  /** Provider-reported reasoning tokens inside the window. */
+  reasoning: number;
   calls: number;
-  models: Record<string, { input: number; output: number; calls: number }>;
+  models: Record<string, {
+    input: number;
+    output: number;
+    cacheRead: number;
+    reasoning: number;
+    calls: number;
+  }>;
 }
 
 /** Normalized DeepSeek account balance record. */

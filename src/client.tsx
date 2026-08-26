@@ -25,6 +25,7 @@ const zh = {
 	"loading": "同步中…",
 	"failed": "获取失败",
 	"unconfigured": "未配置密钥",
+	"sep": "：",
 	"tooltip.balance": "账户余额",
 	"tooltip.today": "今日消耗",
 	"tooltip.input": "输入 tok",
@@ -41,13 +42,18 @@ const zh = {
 	"modal.today": "今日",
 	"modal.week": "本周",
 	"modal.month": "本月",
+	"modal.cacheRead": "缓存命中（本月）",
+	"modal.reasoning": "推理 Token（本月）",
 	"modal.models": "模型使用（本月）",
 	"modal.calls": "API 调用次数（本月）",
 	"modal.callsUnit": "次",
 	"modal.synced": "最后同步",
 	"modal.refresh": "刷新",
 	"modal.close": "关闭",
-	"modal.fetchFailed": "数据获取失败"
+	"modal.fetchFailed": "数据获取失败",
+	"relative.justNow": "刚刚",
+	"relative.minutesAgo": "{m} 分钟前",
+	"relative.hoursAgo": "{h} 小时前"
 };
 
 /** English dictionary, complete against the zh key set. */
@@ -57,6 +63,7 @@ const en = {
 	"loading": "Syncing…",
 	"failed": "Unavailable",
 	"unconfigured": "No API key",
+	"sep": ": ",
 	"tooltip.balance": "Balance",
 	"tooltip.today": "Today",
 	"tooltip.input": "Input tok",
@@ -73,13 +80,18 @@ const en = {
 	"modal.today": "Today",
 	"modal.week": "This week",
 	"modal.month": "This month",
+	"modal.cacheRead": "Cache hit (this month)",
+	"modal.reasoning": "Reasoning (this month)",
 	"modal.models": "Model usage (this month)",
 	"modal.calls": "API calls (this month)",
 	"modal.callsUnit": "calls",
 	"modal.synced": "Last sync",
 	"modal.refresh": "Refresh",
 	"modal.close": "Close",
-	"modal.fetchFailed": "Failed to fetch status"
+	"modal.fetchFailed": "Failed to fetch status",
+	"relative.justNow": "just now",
+	"relative.minutesAgo": "{m} min ago",
+	"relative.hoursAgo": "{h} h ago"
 };
 
 // ── formatting helpers ─────────────────────────────────────────────────────
@@ -116,12 +128,12 @@ function formatFull(value) {
 	return String(Math.round(value)).replace(/\B(?=(\d{3})+(?!\d))/gu, ",");
 }
 
-/** Relative sync age: 刚刚 / X 分钟前 / X 小时前 / date. */
-function formatRelativeLabel(now, at) {
+/** Relative sync age, localized through the plugin dictionary. */
+function formatRelativeLabel(now, at, t) {
 	const delta = now - at;
-	if (delta < 60_000) return "刚刚";
-	if (delta < 3_600_000) return `${Math.floor(delta / 60_000)} 分钟前`;
-	if (delta < 86_400_000) return `${Math.floor(delta / 3_600_000)} 小时前`;
+	if (delta < 60_000) return t("relative.justNow");
+	if (delta < 3_600_000) return t("relative.minutesAgo").replace("{m}", String(Math.floor(delta / 60_000)));
+	if (delta < 86_400_000) return t("relative.hoursAgo").replace("{h}", String(Math.floor(delta / 3_600_000)));
 	const d = new Date(at);
 	const pad = (v) => String(v).padStart(2, "0");
 	return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
@@ -153,8 +165,10 @@ function clamp01(value) {
 interface UsageWindow {
   input: number;
   output: number;
+  cacheRead: number;
+  reasoning: number;
   calls: number;
-  models: Record<string, { input: number; output: number; calls: number }>;
+  models: Record<string, { input: number; output: number; cacheRead: number; reasoning: number; calls: number }>;
 }
 
 /** The status snapshot served by the host half. */
@@ -264,22 +278,23 @@ function BalanceStatus({ wide, t }: BalanceStatusProps) {
 	const todayTokens = today !== null ? `${formatCompact(todayTotal)} tok` : loading ? "—" : t("failed");
 
 	const tooltipLabel = () => {
+		const sep = t("sep");
 		const lines = [];
-		lines.push(`${t("tooltip.balance")}：${balance !== null ? formatMoney(balance.currency, balance.total) : data?.balanceError?.code === "MISSING_CREDENTIAL" ? t("unconfigured") : t("failed")}`);
+		lines.push(`${t("tooltip.balance")}${sep}${balance !== null ? formatMoney(balance.currency, balance.total) : data?.balanceError?.code === "MISSING_CREDENTIAL" ? t("unconfigured") : t("failed")}`);
 		if (today !== null) {
-			lines.push(`${t("tooltip.today")}：${formatFull(todayTotal)} tok`);
-			lines.push(`${t("tooltip.input")}：${formatFull(today.input)}`);
-			lines.push(`${t("tooltip.output")}：${formatFull(today.output)}`);
+			lines.push(`${t("tooltip.today")}${sep}${formatFull(todayTotal)} tok`);
+			lines.push(`${t("tooltip.input")}${sep}${formatFull(today.input)}`);
+			lines.push(`${t("tooltip.output")}${sep}${formatFull(today.output)}`);
 		} else if (loading) {
-			lines.push(`${t("tooltip.today")}：…`);
+			lines.push(`${t("tooltip.today")}${sep}…`);
 		}
 		if (balance !== null && targets !== null) {
-			lines.push(`${t("tooltip.balanceRemain")}：${formatMoney(balance.currency, balance.total)} / ${formatMoney(balance.currency, targets.balance)}（${Math.round(balancePct * 100)}%）`);
+			lines.push(`${t("tooltip.balanceRemain")}${sep}${formatMoney(balance.currency, balance.total)} / ${formatMoney(balance.currency, targets.balance)}（${Math.round(balancePct * 100)}%）`);
 		}
 		if (today !== null && targets !== null) {
-			lines.push(`${t("tooltip.todayQuota")}：${formatCompact(todayTotal)} / ${formatCompact(targets.dailyTokens)} tok（${Math.round(tokenPct * 100)}%）`);
+			lines.push(`${t("tooltip.todayQuota")}${sep}${formatCompact(todayTotal)} / ${formatCompact(targets.dailyTokens)} tok（${Math.round(tokenPct * 100)}%）`);
 		}
-		lines.push(`${t("tooltip.synced")}：${data !== null ? formatRelativeLabel(Date.now(), data.syncedAt) : "—"}`);
+		lines.push(`${t("tooltip.synced")}${sep}${data !== null ? formatRelativeLabel(Date.now(), data.syncedAt, t) : "—"}`);
 		return lines.join("\n");
 	};
 
@@ -344,6 +359,8 @@ function BalanceStatus({ wide, t }: BalanceStatusProps) {
 							<DetailRow label={t("modal.today")} value={usage !== null ? `${formatFull(usage.today.input + usage.today.output)} tok · ${formatFull(usage.today.calls)} ${t("modal.callsUnit")}` : "—"} />
 							<DetailRow label={t("modal.week")} value={usage !== null ? `${formatFull(usage.week.input + usage.week.output)} tok · ${formatFull(usage.week.calls)} ${t("modal.callsUnit")}` : "—"} />
 							<DetailRow label={t("modal.month")} value={usage !== null ? `${formatFull(usage.month.input + usage.month.output)} tok · ${formatFull(usage.month.calls)} ${t("modal.callsUnit")}` : "—"} />
+							<DetailRow label={t("modal.cacheRead")} value={usage !== null ? `${formatFull(usage.month.cacheRead)} tok` : "—"} />
+							<DetailRow label={t("modal.reasoning")} value={usage !== null ? `${formatFull(usage.month.reasoning)} tok` : "—"} />
 						</div>
 					</section>
 					<section className={styles.block}>
@@ -368,7 +385,7 @@ function BalanceStatus({ wide, t }: BalanceStatusProps) {
 				</div>
 				<div className={styles.modalFooter}>
 					<span className={styles.syncNote}>
-						{t("modal.synced")}：{data !== null ? formatRelativeLabel(Date.now(), data.syncedAt) : "—"}
+						{t("modal.synced")}{t("sep")}{data !== null ? formatRelativeLabel(Date.now(), data.syncedAt, t) : "—"}
 						{loading && <IconLoadingOutline16 size={14} className={styles.spin} />}
 					</span>
 					<Button variant="outline" disabled={loading} onClick={() => load(true)}>

@@ -1,7 +1,7 @@
 {
   "name": "dsh-balance-status",
   "description": "DeepSeek 账户余额状态组件 — 极简型 dsh web 侧边栏插件（余额 + Token 用量）",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "type": "module",
   "main": "lib/index.js",
@@ -26,8 +26,9 @@
   "scripts": {
     "build": "node scripts/build-client.mjs",
     "smoke": "node scripts/smoke-client.mjs",
+    "unit": "node scripts/unit.mjs",
     "validate": "node scripts/validate-host.mjs",
-    "check": "node scripts/build-client.mjs && node scripts/smoke-client.mjs"
+    "check": "node scripts/build-client.mjs && node scripts/smoke-client.mjs && node scripts/unit.mjs"
   },
   "dsh": {
     "bundle": {
@@ -41,6 +42,9 @@
         "@deepseek-ai/dsh-client-ui-sidebar"
       ]
     }
+  },
+  "dependencies": {
+    "@deepseek-ai/schemastery": "^3.18.1"
   },
   "devDependencies": {
     "esbuild": "^0.25.0",

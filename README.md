@@ -68,8 +68,10 @@ targets, usage, errors }`（字段说明见 `lib/types.d.ts` 与架构文档）�
 在 设置 → Models 填入 DeepSeek API Key（或导出 `DEEPSEEK_API_KEY`）。
 
 **能量条比例怎么改？**
-`lib/index.js` 顶部 `BALANCE_DISPLAY_TARGET` / `DAILY_TOKEN_TARGET`，
-改后重启。
+按序生效（环境变量优先）：① 宿主设置段 `settings.yaml` 的
+`balance-status:`（`balance` / `dailyTokens`，改动即热生效、无需重启）；
+② 环境变量 `BALANCE_STATUS_BALANCE_TARGET` / `BALANCE_STATUS_DAILY_TOKENS`；
+③ `lib/index.js` 编译默认值（¥100 / 500K）。
 
 **卸载干净吗？**
 `dsh plugin --profile web remove dsh-balance-status` + 重启即可，无数据残留。

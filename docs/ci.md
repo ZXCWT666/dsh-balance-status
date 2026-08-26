@@ -5,7 +5,7 @@
 
 ## 工作流（`.github/workflows/ci.yml`）
 
-**触发**：push 到 `main`、pull request、`workflow_dispatch`（手动）。
+**触发**：仅 `workflow_dispatch`（手动）——平台级 Runner 激活前避免 push 排队噪音；需要自动触发时改回 push/PR 即可。
 
 **job 1 — build-and-smoke**
 
@@ -15,6 +15,7 @@
 | pnpm | `pnpm/action-setup@v4` | 提供 pnpm |
 | Node | `actions/setup-node@v4`（node 22，`cache: pnpm`） | 运行时 |
 | Install | `pnpm install --frozen-lockfile` | 按锁定版本安装（esbuild/react 仅开发用） |
+| Unit | `node scripts/unit.mjs` | 纯函数单测（无网络/凭证） |
 | Build | `node scripts/build-client.mjs` | 由 `src/` 生成浏览器 bundle |
 | Smoke | `node scripts/smoke-client.mjs` | 物料化 bundle 并校验 slot/locale 注册 |
 | 无漂移 | `git diff --exit-code -- lib/client.js` | 提交的 `lib/client.js` 必须与源码一致 |
@@ -42,6 +43,8 @@ $ node scripts/smoke-client.mjs
   register disposer is function: true
   locale namespaces: [ 'balance' ]
   OK
+
+$ node scripts/unit.mjs                       # 13 个纯函数用例全部通过
 
 $ git diff --exit-code -- lib/client.js       # 退出码 0 —— 提交包与源码零漂移
 ```

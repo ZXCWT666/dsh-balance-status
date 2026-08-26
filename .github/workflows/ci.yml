@@ -1,9 +1,8 @@
 name: ci
 
+# 手动触发（workflow_dispatch）: 首次平台级 Runner 激活后，需要时在
+# Actions 页手动运行；避免 push 触发在激活完成前产生排队噪音。
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -24,6 +23,9 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Unit tests (pure functions, no network)
+        run: node scripts/unit.mjs
+
       - name: Build client bundle
         run: node scripts/build-client.mjs
 
@@ -33,7 +35,7 @@ jobs:
       - name: Verify committed bundle is in sync
         run: git diff --exit-code -- lib/client.js
 
-  typecheck:
+  manifest:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
