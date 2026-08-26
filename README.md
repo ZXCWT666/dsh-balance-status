@@ -30,13 +30,13 @@ DeepSeek 账户余额    ¥17.83      ████████░░  余额剩�
 ## 安装与验证
 
 ```powershell
-dsh plugin --profile web add @ZXCWT666/dsh-balance-status     # 重启 Harness 应用后生效
+dsh plugin --profile web add github:ZXCWT666/dsh-balance-status     # 重启 Harness 应用后生效
 
 (Invoke-WebRequest "http://127.0.0.1:3080/balance-status/status?force=1").Content   # 手动刷新一次
 ```
 
-> 包名方式安装（`@账号/插件包名`）。已克隆到本地时也可用本地路径
-> `add C:\Users\USER\source\repos\dsh-balance-status`。
+> GitHub 源安装（公开仓库，免凭证）。也可以把仓库克隆到本地后
+> `add <本地克隆路径>`。
 
 > 上面这条是命令行版的「刷新」（`?force=1` 绕过 60s 缓存），Windows PowerShell 下用
 > `Invoke-WebRequest` 写法（或直接用 Win10+ 自带的 `curl.exe`）。

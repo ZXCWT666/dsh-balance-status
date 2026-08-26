@@ -11,7 +11,7 @@ const repoRoot = new URL("../", import.meta.url).pathname.replace(/^\/([A-Za-z]:
 const modulesRoots = [
   process.env.REACT_MODULES_ROOT,
   repoRoot.replace(/\/$/, "") + "/node_modules",
-  "D:/dsh/node_modules",
+
 ].filter((candidate) => candidate !== undefined);
 const findReact = (spec) => {
   for (const root of modulesRoots) {

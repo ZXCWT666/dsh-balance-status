@@ -27,7 +27,7 @@
 
 ## 本地同口径验证（2026-08-26，开发机）
 
-在仓库根克隆目录（`C:\Users\USER\source\repos\dsh-balance-status`）执行：
+在仓库根克隆目录（`<仓库克隆目录>`）执行：
 
 ```
 $ pnpm install

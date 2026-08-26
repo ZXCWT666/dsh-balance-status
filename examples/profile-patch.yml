@@ -2,4 +2,4 @@
 # （等价于本仓库 cordis.patch.yml 的内容；仅当你想手写组合时参考。）
 - insert:
     - id: balance-status
-      name: 'dsh-balance-status'
+      name: '@ZXCWT666/dsh-balance-status'
