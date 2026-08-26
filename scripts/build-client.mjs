@@ -12,6 +12,11 @@ const entryPath = fileURLToPath(new URL("../src/client.tsx", import.meta.url));
 const tmpOutPath = fileURLToPath(new URL("../lib/_client.bundle.cjs", import.meta.url));
 const finalOutPath = fileURLToPath(new URL("../lib/client.js", import.meta.url));
 
+// The registered bundle id must equal the package name (client-modules keys
+// factories by it); read it from the manifest so a rename stays in sync.
+const pkg = JSON.parse(await readFile(fileURLToPath(new URL("../package.json", import.meta.url)), "utf8"));
+const bundleId = pkg.name;
+
 await build({
 	entryPoints: [entryPath],
 	bundle: true,
@@ -33,7 +38,7 @@ await build({
 
 const body = await readFile(tmpOutPath, "utf8");
 const wrapped = `window.__ModuleLoader__.load({
-	id: "dsh-balance-status",
+	id: ${JSON.stringify(bundleId)},
 	factory: (require) => {
 		var module = { exports: {} };
 		var exports = module.exports;
