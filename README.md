@@ -68,7 +68,7 @@ pnpm validate         # 宿主离线校验（可选，读 $DSH_HOME + 真实凭�
 
 - 修改 `src/*` 后：`pnpm build` → 重新安装 → 刷新页面（bundle 变更无需重启）；
 - 修改 profile/composition 需要重启 Harness 应用；
-- 接口类型见 `lib/types.d.ts`；架构细节见 [`docs/architecture.md`](docs/architecture.md)；
+- 接口类型见 `lib/types.d.ts`；架构见 [`docs/architecture.md`](docs/architecture.md)、CI 状态见 [`docs/ci.md`](docs/ci.md)；
   提交规范见 [`CONTRIBUTING.md`](CONTRIBUTING.md)；版本记录见
   [`CHANGELOG.md`](CHANGELOG.md)。
 
