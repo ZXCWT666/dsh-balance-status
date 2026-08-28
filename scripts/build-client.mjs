@@ -37,17 +37,19 @@ await build({
 });
 
 const body = await readFile(tmpOutPath, "utf8");
+// esbuild prefixes each bundled module with a comment carrying the absolute
+// source path (machine-specific: leaks the build machine's username/paths).
+// Strip any comment that starts with an absolute path (drive letter or root).
+const sanitized = body.replace(/^\/\/ (?:[A-Za-z]:[\\/]|[\\/])[^\r\n]*$/gm, "");
 const wrapped = `window.__ModuleLoader__.load({
 	id: ${JSON.stringify(bundleId)},
 	factory: (require) => {
 		var module = { exports: {} };
 		var exports = module.exports;
-${body}
+${sanitized}
 		return module.exports;
 	}
 });
-
-//# sourceMappingURL=client.js.map
 `;
 await writeFile(finalOutPath, wrapped);
 console.log(`built ${finalOutPath}`);
